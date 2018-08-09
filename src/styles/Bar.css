@@ -1,0 +1,9 @@
+.bar {
+    fill: rgb(86,180,233);
+    stroke: none;
+    transition: fill 150ms ease;
+}
+
+.bar:hover {
+    fill: rgb(230, 129, 0);
+}

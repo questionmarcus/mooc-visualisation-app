@@ -1,0 +1,15 @@
+.year-picker {
+    display: flex;
+    justify-content: center;
+}
+
+.year-picker button {
+    font-size: 25px;
+    width:100px;
+    height:40px;
+    border: none;
+}
+
+.year-picker .active {
+    border-bottom: 5px solid red;
+}
