@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getAPIData = (urlSuffix) => {
-    let url = window.encodeURI("http://localhost:5000/"+urlSuffix);
+    let url = window.encodeURI("http://questionmarcus.pythonanywhere.com/"+urlSuffix);
     return axios.get(url).then( response => response.data );
 };
 
