@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import * as nLinesCode from "../data/nLinesCode.json";
 import getAPIData from "../utils/api_connect";
 import Bar from "../components/Bar";
 import XAxis from "../components/XAxis";
 import YAxis from "../components/YAxis";
 import XLabel from "../components/XLabel";
 import YLabel from "../components/YLabel";
+import LoadingScreen from "../components/LoadingScreen.js";
 import { extent, zip } from "d3-array";
 import {scaleLinear, scaleBand} from "d3-scale";
 
@@ -20,8 +20,14 @@ class LinesOfCodePerUser extends Component {
         this.getData();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.year !== this.props.year) {
+            this.getData();
+        }
+    }
+
     getData() {
-        getAPIData("histogram/2017").then(
+        getAPIData("histogram/"+this.props.year).then(
             json => this.setState(() => {return {api_data: json};})
         );
     }
@@ -33,13 +39,8 @@ class LinesOfCodePerUser extends Component {
             const margin = {"left":60, "bottom":50};
             const zipped = zip(data,bins);
             const fontSize = "12";
-
-            //console.log(getAPIData("histogram"));
-
             const xScale = scaleBand().domain(bins).range([margin.left,width]).paddingInner(0.05);
-
             const yScale = scaleLinear().domain(extent(data)).range([height-margin.bottom,0]);
-
             const bars = zipped.map((arr, i) => {
                 return <Bar
                     barWidth={xScale.bandwidth()}
@@ -70,7 +71,7 @@ class LinesOfCodePerUser extends Component {
             );
         } else {
             return (
-                <div>Loading</div>
+                <LoadingScreen />
             );
         }
     }

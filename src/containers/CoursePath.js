@@ -24,6 +24,7 @@ class CoursePath extends Component {
     }
 
     getData() {
+        this.setState({api_data:null});
         getAPIData("studypath/"+this.props.year).then(
             json => this.setState(() => {return {api_data: json};})
         );

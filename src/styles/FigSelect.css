@@ -1,0 +1,19 @@
+.fig-select {
+    grid-column: 1 / 1;
+    grid-row: 2 / 4;
+    background-color:lightgrey;
+}
+
+.fig-select button {
+    width:100%;
+    border: None;
+    text-align: left;
+    font-size:18px;
+    background-color:inherit;
+}
+
+.fig-select .active {
+    font-size:20px;
+    padding: 5px 0px 5px 15px;
+    background-color:white;
+}
