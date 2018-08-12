@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import getAPIData from "../utils/api_connect.js";
 import LoadingScreen from "../components/LoadingScreen.js";
 import CalendarDay from "../components/CalendarDay.js";
+import * as labels from "../components/CalendarLabels.js";
+import colourBar from "../components/colourBar.js";
 import * as time from "d3-time";
 import {min,max,range} from "d3-array";
 import {scaleLinear, scaleBand} from "d3-scale";
@@ -51,59 +53,54 @@ class CalendarView extends Component {
             );
             const xScale = scaleLinear().domain([0,52]).range([40,width]);
             const yearScale = scaleBand().domain(yearArray).range([0,height]).padding(0.3);
-            console.log(yearScale(2017));
             const yScale = scaleLinear().domain([0,6]).range([0,yearScale.bandwidth()]);
+            const weekNum = (date) => time.timeMonday.count(time.timeYear(date),date);
+
             const rects = this.state.api_data.map(ob => {
                 return <CalendarDay
-                    xPos={xScale(time.timeMonday.count(time.timeYear(ob.date),ob.date))}
+                    key={ob.date.toISOString().substring(0,10)}
+                    xPos={xScale(weekNum(ob.date))}
                     yPos={yScale((ob.date.getDay() + 6) % 7)+yearScale(ob.date.getFullYear())}
                     size={cellSize}
                     colour={interpolateYlGn(cScale(ob.value))}
                     value={ob.value}
                     day={ob.date.toDateString()}/>;
             });
-            const days = (year) =>
-                ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map((day,ind) =>
-                    <text
-                        x="15"
-                        y={yScale(ind)+yearScale(year)+cellSize-cellGap}
-                        fontSize="12px">
-                        {day}
-                    </text>
-                );
-
-            const months = (year) =>
-                ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].map((mon,ind) => {let startMonth = new Date(Date.UTC(year,ind,1,0,0,0));
-                    return (
-                        <text
-                            x={xScale(time.timeMonday.count(time.timeYear(startMonth),startMonth))}
-                            y={yScale(0)-5+yearScale(startMonth.getFullYear())}
-                            fontSize="12px">
-                            {mon}
-                        </text>
-                    );});
-          
-            const dayLabels = yearArray.map(year => days(year));
-            const monthLabels = yearArray.map(year => months(year));
-            const yearLabels = yearArray.map(year => 
-                <text
-                    x={xScale(0)}
-                    y={yScale(0)-20+yearScale(year)}
-                    fontSize="16px"
-                >{year}</text>
+            const dayLabels = yearArray.map(year => 
+                labels.dayLabel(year,yScale,yearScale,cellSize,cellGap)
             );
-            console.log(months(2016));
+            const monthLabels = yearArray.map(year => 
+                labels.monthLabel(year,xScale,weekNum,yScale,yearScale)
+            );
+            const yearLabels = yearArray.map(year =>
+                labels.yearLabel(year,xScale,yScale,yearScale)
+            );
+            
             return (
-                <svg width="100%" viewBox={"0 0 "+width+" "+height}>
-                    {yearLabels}
-                    {monthLabels}
-                    {dayLabels}
-                    {rects}
-                </svg>
+                <React.Fragment>
+                    <h1>Active Daily MOOC Users Calendar</h1>
+                    <svg width="100%" viewBox={"0 0 "+width+" "+(height+50)}>
+                        {yearLabels}
+                        {monthLabels}
+                        {dayLabels}
+                        {rects}
+                        {colourBar(
+                            700,
+                            width,
+                            height,
+                            min(this.state.api_data.map(ob => ob.value)),
+                            max(this.state.api_data.map(ob => ob.value)),
+                            interpolateYlGn)
+                        }
+                    </svg>
+                </React.Fragment>
             );
         } else {
             return (
-                <LoadingScreen />
+                <React.Fragment>
+                    <h1>Active Daily MOOC Users Calendar</h1>
+                    <LoadingScreen />
+                </React.Fragment>
             );
         }
     }

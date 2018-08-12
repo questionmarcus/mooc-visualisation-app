@@ -65,13 +65,19 @@ class LinesOfCodePerUser extends Component {
             const yLabel = <YLabel fontSize="16px" height={height}>Number of Users</YLabel>;
 
             return (
-                <svg width="100%" viewBox={"0 0 "+width+" "+height}>
-                    {bars}{xAxis}{yAxis}{xLabel}{yLabel}
-                </svg>
+                <React.Fragment>
+                    <h1>Number of lines of Haskell Written by users During MOOC</h1>
+                    <svg width="100%" viewBox={"0 0 "+width+" "+height}>
+                        {bars}{xAxis}{yAxis}{xLabel}{yLabel}
+                    </svg>
+                </React.Fragment>
             );
         } else {
             return (
-                <LoadingScreen />
+                <React.Fragment>
+                    <h1>Number of lines of Haskell Written by users During MOOC</h1>
+                    <LoadingScreen />
+                </React.Fragment>
             );
         }
     }
