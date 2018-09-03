@@ -5,13 +5,15 @@ import YearSelect from "../components/YearSelect.js";
 import FigureSelect from "../components/FigureSelect.js";
 import CalendarView from "./Calendar.js";
 import AccessedTutorials from "./AccessedTutorials.js";
+import ModalSplashScreen from "../components/ModalSplashScreen.js"
 import "../styles/MainLayout.css";
 import "../styles/FigDisplay.css";
 
 class App extends Component {
     constructor(props) {
-        super(props);
+      super(props)
         this.state = {
+            showModal:true,
             selectedYear:2016,
             availableYears:[2016,2017,"All"],
             selectedFig: 0,
@@ -22,20 +24,23 @@ class App extends Component {
                 {name: "Tutorials viewed by Users", id:3}
             ]
         };
-        this.updateYear = this.updateYear.bind(this);
-        this.updateFig = this.updateFig.bind(this);
-        this.Fig2Display = this.Fig2Display.bind(this);
     }
 
-    updateYear(year) {
+    updateYear = year => {
         this.setState({selectedYear: year});
     }
 
-    updateFig(id) {
+    updateFig = id => {
         this.setState({selectedFig:id});
     }
+  
+    closeModal = () => {
+      this.setState(prevState => ({
+          showModal: !prevState.showModal
+      }))
+    }
 
-    Fig2Display() {
+    Fig2Display = () => {
         switch (this.state.selectedFig) {
         case 0:
             return <CoursePath year={this.state.selectedYear}/>;
@@ -52,6 +57,12 @@ class App extends Component {
 
     render() {
         return (
+          <React.Fragment>
+            {this.state.showModal ?
+              <ModalSplashScreen closeModalFunc={this.closeModal} />
+              :
+              null
+            }
             <div className="App">
                 <YearSelect
                     selYear={this.state.selectedYear}
@@ -67,6 +78,7 @@ class App extends Component {
                     {this.Fig2Display()}
                 </div>
             </div>
+          </React.Fragment>
         );
     }
 }
