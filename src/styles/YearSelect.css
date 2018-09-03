@@ -1,14 +1,3 @@
-.year-picker {
-    width:100%;
-    height:100%;
-    grid-column: 1 / 3;
-    grid-row: 1 / 1;
-    background-color:steelblue;
-    display:flex;
-    justify-content:center;
-    align-items: center;
-}
-
 .year-picker button {
     font-size: 20px;
     height:30px;
