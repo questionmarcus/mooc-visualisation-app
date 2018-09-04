@@ -47,6 +47,7 @@ class AccessedTutorials extends Component {
 
             const bars = this.state.api_data.tutorial_numbers.map((tut,i) => 
                 <Bar
+                    key={"tutorialBarBottom_"+i}
                     barWidth={xScale.bandwidth()}
                     height={yScale(1-(tut.num_accessed/nUsers))}
                     offset={xScale(this.state.ordered_tuts.indexOf(tut.name))}
@@ -56,6 +57,7 @@ class AccessedTutorials extends Component {
 
             const nonCompleted = this.state.api_data.tutorial_numbers.map((tut,i) =>
                 <rect
+                    key={"tutorialBarTop"+i}
                     x={xScale(this.state.ordered_tuts.indexOf(tut.name))}
                     y={0+margins.top}
                     height={figHeight-margins.bottom-yScale(tut.num_accessed/nUsers)}
@@ -65,6 +67,7 @@ class AccessedTutorials extends Component {
 
             const axisLabels = this.state.api_data.tutorial_numbers.map((tut,i) =>
                 <text
+                    key={"AxisLabel_"+i}
                     x={xScale(this.state.ordered_tuts.indexOf(tut.name))+
                       xScale.bandwidth()/2}
                     y={figHeight}
@@ -76,6 +79,7 @@ class AccessedTutorials extends Component {
 
             const barHeightLabels = this.state.api_data.tutorial_numbers.map((tut,i) =>
                 <text
+                    key={"BarHeightLabel_"+i}
                     x={xScale(this.state.ordered_tuts.indexOf(tut.name))+
                       xScale.bandwidth()/2}
                     y={yScale(1-(tut.num_accessed/nUsers))}

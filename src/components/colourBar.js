@@ -7,7 +7,7 @@ const colourBar = (barWidth,figWidth,figHeight,min,max,colourScheme) => {
             <defs>
                 <linearGradient id="colourBar" x1="0" x2="1" y1="0" y2="0">
                     {range(0,1.01, 0.05).map(num => 
-                        <stop offset={(num*100)+"%"} stopColor={colourScheme(num)}/>
+                        <stop key={"stop_"+num} offset={(num*100)+"%"} stopColor={colourScheme(num)}/>
                     )}
                 </linearGradient>
             </defs>
