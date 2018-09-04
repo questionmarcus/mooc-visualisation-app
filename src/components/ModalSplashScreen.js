@@ -5,7 +5,6 @@ const ModalSplashScreen = (closeFunc) => {
     return (
         <div id="ModalSplashScreen">
             <div className="ModalDisplay">
-                <button onClick={() => closeFunc.closeModalFunc()}>X</button>
                 <h3>Welcome to the data visualisation application for Glasgow University's Haskell MOOC</h3>
                 <p>
       Since September 2016, Glasgow University has been running a Massive Open Online Course (MOOC) to teach <em><a alt="Find out more about Haskell" href="https://wiki.haskell.org/Introduction">Haskell</a></em>.
@@ -14,8 +13,11 @@ const ModalSplashScreen = (closeFunc) => {
                 </p>
                 <p>
 This application was written as a way to provide a window into the way in which users engage with the course materials.
-      Additionally, this application set out to try and <em>map</em> the way users travel between courses, to see which exercises students were completing.
+      Additionally, this application set out to try and <em>map</em> the way users travel between courses, to see which exercises students were completing and which ones they might prefer to skip.
                 </p>
+                <button className="action-btn" onClick={() => closeFunc.toggleModalFunc()}>
+                    Continue to Application
+                </button>
             </div>
         </div>
     );

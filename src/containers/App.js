@@ -34,7 +34,7 @@ class App extends Component {
         this.setState({selectedFig:id});
     }
   
-    closeModal = () => {
+    toggleModal = () => {
       this.setState(prevState => ({
           showModal: !prevState.showModal
       }))
@@ -59,10 +59,11 @@ class App extends Component {
         return (
           <React.Fragment>
             {this.state.showModal ?
-              <ModalSplashScreen closeModalFunc={this.closeModal} />
+              <ModalSplashScreen toggleModalFunc={this.toggleModal} />
               :
               null
             }
+            <button id="info-toggle" onClick={() => this.toggleModal()}>?</button>
             <div className="App">
                 <YearSelect
                     selYear={this.state.selectedYear}

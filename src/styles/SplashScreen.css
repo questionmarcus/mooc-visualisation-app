@@ -13,9 +13,32 @@
 
 #ModalSplashScreen .ModalDisplay {
     background: white;
-    width: 60%;
+    width: 600px;
+    padding:40px;
+    border-radius:20px;
+    box-sizing: border-box;
 }
 
-.ModalDisplay button {
+.ModalDisplay .exit-btn {
     float: right;
+}
+
+.ModalDisplay .action-btn {
+    display: block;
+    margin: 0 auto;
+    background-color: steelBlue;
+    color: white;
+    height: 40px;
+    border:none;
+    font-weight:600;
+    border-radius:10px;
+}
+
+@media only screen and (max-width:600px) {
+    #ModalSplashScreen .ModalDisplay {
+        width: 100%;
+        padding:40px;
+        border-radius:20px;
+        box-sizing: border-box;
+    }
 }
